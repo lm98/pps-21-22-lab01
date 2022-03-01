@@ -3,6 +3,7 @@ import lab01.tdd.CircularListImpl;
 import lab01.tdd.SelectStrategy;
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +16,7 @@ public class CircularListTest {
 
     @BeforeEach
     void setup(){
-        cl = new CircularListImpl();
+        cl = new CircularListImpl(new ArrayList<Integer>());
     }
 
     @Test

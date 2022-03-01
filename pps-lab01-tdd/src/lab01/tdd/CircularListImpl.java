@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
-    private List<Integer> list;
+    private final List<Integer> list;
     private int head;
 
-    public CircularListImpl(){
-        this.list = new ArrayList<>();
+    public CircularListImpl(List<Integer> listImpl){
+        this.list = listImpl;
         this.head = -1;
     }
 

@@ -54,13 +54,13 @@ public class CircularListImpl implements CircularList {
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
         var found = list.stream().anyMatch(strategy::apply);
-        if(found){
-           var element = next();
-           while(!strategy.apply(element.get())){
-               element = next();
-           }
-           return element;
+        if(!found){
+            return Optional.empty();
         }
-        return Optional.empty();
+        var element = next();
+        while(!strategy.apply(element.get())){
+            element = next();
+        }
+        return element;
     }
 }

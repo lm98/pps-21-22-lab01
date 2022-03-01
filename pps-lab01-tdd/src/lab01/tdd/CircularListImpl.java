@@ -6,9 +6,11 @@ import java.util.Optional;
 
 public class CircularListImpl implements CircularList {
     private List<Integer> list;
+    private int head;
 
     public CircularListImpl(){
         this.list = new ArrayList<>();
+        this.head = -1;
     }
 
     @Override
@@ -28,21 +30,37 @@ public class CircularListImpl implements CircularList {
 
     @Override
     public Optional<Integer> next() {
-        return Optional.empty();
+        head++;
+        if(head >= list.size()) {
+            head = 0;
+        }
+        return Optional.of(list.get(head));
     }
 
     @Override
     public Optional<Integer> previous() {
-        return Optional.empty();
+        head--;
+        if(head <= list.size()){
+            head = 0;
+        }
+        return Optional.of(list.get(head));
     }
 
     @Override
     public void reset() {
-
+        this.head = -1;
     }
 
     @Override
     public Optional<Integer> next(SelectStrategy strategy) {
+        var found = list.stream().anyMatch(strategy::apply);
+        if(found){
+           var element = next();
+           while(!strategy.apply(element.get())){
+               element = next();
+           }
+           return element;
+        }
         return Optional.empty();
     }
 }

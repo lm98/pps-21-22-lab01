@@ -1,5 +1,6 @@
 import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
+import lab01.tdd.EvenSelectStrategyFactory;
 import lab01.tdd.SelectStrategy;
 import org.junit.jupiter.api.*;
 
@@ -12,85 +13,80 @@ import static org.junit.jupiter.api.Assertions.*;
  * The test suite for testing the CircularList implementation
  */
 public class CircularListTest {
-    private CircularList cl;
+    private CircularList circularList;
 
     @BeforeEach
-    void setup(){
-        cl = new CircularListImpl(new ArrayList<Integer>());
+    void beforeEach(){
+        circularList = new CircularListImpl(new ArrayList<>());
     }
 
     @Test
     void testIsEmpty(){
-        assertTrue(cl.isEmpty());
+        assertTrue(circularList.isEmpty());
     }
 
     @Test
     void testAdd(){
-        cl.add(1);
-        assertFalse(cl.isEmpty());
+        circularList.add(1);
+        assertFalse(circularList.isEmpty());
     }
 
     @Test
     void testSize(){
-        cl.add(1);
-        cl.add(2);
-        assertEquals(2,cl.size());
+        circularList.add(1);
+        circularList.add(2);
+        assertEquals(2, circularList.size());
     }
 
     @Test
     void testNext(){
-        cl.add(1);
-        cl.add(2);
-
-        var first = cl.next();
-        var second = cl.next();
-        var third = cl.next();
+        circularList.add(1);
+        circularList.add(2);
+        var first = circularList.next();
+        var second = circularList.next();
+        var third = circularList.next();
         assertEquals(Optional.of(1), third);
     }
 
     @Test
     void testPrevious(){
-        cl.add(1);
-        cl.add(2);
-        cl.add(3);
-
-        var first = cl.previous();
-        var second = cl.previous();
-        var third = cl.previous();
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        var first = circularList.previous();
+        var second = circularList.previous();
+        var third = circularList.previous();
         assertEquals(Optional.of(1), third);
     }
 
     @Test
     void testReset(){
-        cl.add(1);
-        cl.add(2);
-        cl.add(3);
-
-        var first = cl.next();
-        var second = cl.next();
-
-        cl.reset();
-
-        var third = cl.next();
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        var first = circularList.next();
+        var second = circularList.next();
+        circularList.reset();
+        var third = circularList.next();
         assertEquals(Optional.of(1), third);;
     }
 
     @Test
     void testNextWithStrategy(){
-        cl.add(1);
-        cl.add(2);
-        cl.add(3);
-
-        var result = cl.next(element -> element%2==0);
+        circularList.add(1);
+        circularList.add(2);
+        circularList.add(3);
+        var selectStrategy = new EvenSelectStrategyFactory().createSelectStrategy();
+        var result = circularList.next(selectStrategy);
         assertEquals(Optional.of(2), result);
     }
 
     @Test
     void testNextWithStrategyNotPresent(){
-        cl.add(1);
-        cl.add(3);
-
-        var result = cl.next(element -> element%2==0);
+        circularList.add(1);
+        circularList.add(3);
+        var selectStrategy = new EvenSelectStrategyFactory().createSelectStrategy();
+        var result = circularList.next(selectStrategy);
         assertEquals(Optional.empty(), result);
     }
 }

@@ -83,10 +83,20 @@ public class CircularListTest {
 
     @Test
     void testNextWithStrategyNotPresent(){
+        circularList.add(3);
+        circularList.add(2);
+        var result = circularList.next(e->e==1);
+        assertEquals(Optional.empty(), result);
+    }
+
+    @Test
+    void testHeadPositionAfterStrategy(){
         circularList.add(1);
         circularList.add(3);
-        var selectStrategy = new EvenSelectStrategyFactory().createSelectStrategy();
-        var result = circularList.next(selectStrategy);
-        assertEquals(Optional.empty(), result);
+        circularList.add(5);
+        circularList.add(2);
+        circularList.next(e->e%2==0);
+        var result = circularList.next();
+        assertEquals(1, result.get());
     }
 }

@@ -1,7 +1,6 @@
 import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
 import lab01.tdd.EvenSelectStrategyFactory;
-import lab01.tdd.SelectStrategy;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class CircularListTest {
         var first = circularList.next();
         var second = circularList.next();
         var third = circularList.next();
-        assertEquals(Optional.of(1), third);
+        assertEquals(1, third.get());
     }
 
     @Test
@@ -56,7 +55,7 @@ public class CircularListTest {
         var first = circularList.previous();
         var second = circularList.previous();
         var third = circularList.previous();
-        assertEquals(Optional.of(1), third);
+        assertEquals(1, third.get());
     }
 
     @Test
@@ -68,7 +67,7 @@ public class CircularListTest {
         var second = circularList.next();
         circularList.reset();
         var third = circularList.next();
-        assertEquals(Optional.of(1), third);;
+        assertEquals(1, third.get());;
     }
 
     @Test
@@ -78,7 +77,7 @@ public class CircularListTest {
         circularList.add(3);
         var selectStrategy = new EvenSelectStrategyFactory().createSelectStrategy();
         var result = circularList.next(selectStrategy);
-        assertEquals(Optional.of(2), result);
+        assertEquals(2, result.get());
     }
 
     @Test

@@ -30,7 +30,7 @@ public abstract class AbstractBankAccountTest {
     void testWithdraw() {
         bankAccount.deposit(accountHolder.getId(), 100);
         bankAccount.withdraw(accountHolder.getId(), 70);
-        assertEquals(30 - getFee()*2, bankAccount.getBalance());
+        assertEquals(100 - 70 - getFee()*2, bankAccount.getBalance());
     }
 
     @Test

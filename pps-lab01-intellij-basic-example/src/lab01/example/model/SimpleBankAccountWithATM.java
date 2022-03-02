@@ -10,7 +10,7 @@ public class SimpleBankAccountWithATM extends AbstractBankAccount {
 
     @Override
     double getFee(){
-        return this.ATM_FEE;
+        return ATM_FEE;
     }
 
 }
